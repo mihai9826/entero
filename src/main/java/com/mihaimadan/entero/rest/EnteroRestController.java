@@ -9,9 +9,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mihaimadan.entero.entity.Appointment;
 import com.mihaimadan.entero.entity.Patient;
+import com.mihaimadan.entero.service.DermatoService;
 import com.mihaimadan.entero.service.PatientService;
 
 @RestController
@@ -19,6 +22,9 @@ public class EnteroRestController {
 	
 	@Autowired
 	private PatientService patientService;
+	
+	@Autowired
+	private DermatoService dermatoService;
 	
 	@GetMapping("/patients")
 	public List<Patient> getAllPatients() {
@@ -61,6 +67,13 @@ public class EnteroRestController {
 		patientService.addPatient(thePatient);
 		
 		return thePatient;
+	}
+	
+	@GetMapping("/dermato")
+	public List<Appointment> getAppointmentBySSN(@RequestParam(name="ssn") String ssn) {
+		
+		
+		return dermatoService.findBySSN(ssn);
 	}
 
 }
