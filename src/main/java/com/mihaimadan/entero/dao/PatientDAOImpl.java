@@ -2,11 +2,11 @@ package com.mihaimadan.entero.dao;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.mihaimadan.entero.entity.Patient;
@@ -15,13 +15,12 @@ import com.mihaimadan.entero.entity.Patient;
 public class PatientDAOImpl implements PatientDAO {
 	
 	@Autowired
-	@Qualifier("entero")
-	private SessionFactory sessionFactory;
+	private EntityManager entityManager;
 
 	@Override
 	public List<Patient> getPatients() {
 		
-		Session currentSession = sessionFactory.getCurrentSession();
+		Session currentSession = entityManager.unwrap(Session.class);
 		
 		Query<Patient> theQuery = 
 				currentSession.createQuery("From Patient", Patient.class);
@@ -34,7 +33,7 @@ public class PatientDAOImpl implements PatientDAO {
 	@Override
 	public Patient getPatient(String id) {
 		
-		Session currentSession = sessionFactory.getCurrentSession();
+		Session currentSession = entityManager.unwrap(Session.class);
 		
 		Patient thePatient = currentSession.get(Patient.class, id);
 		
@@ -44,7 +43,7 @@ public class PatientDAOImpl implements PatientDAO {
 	@Override
 	public void addPatient(Patient thePatient) {
 		
-		Session currentSession = sessionFactory.getCurrentSession();
+		Session currentSession = entityManager.unwrap(Session.class);
 		
 		currentSession.saveOrUpdate(thePatient);
 	}

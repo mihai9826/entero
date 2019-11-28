@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="patients")
@@ -32,7 +33,14 @@ public class Patient {
 	
 	@Column(name="date_of_birth")
 	private LocalDate dateOfBirth;
-
+	
+	@Transient
+	private Appointments appointments;
+	
+	@Transient
+	private Appointment appointment;
+	
+	
 	public String getSSN() {
 		return SSN;
 	}
@@ -87,6 +95,24 @@ public class Patient {
 
 	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
+	}
+	
+	public Appointments getAppointments() {
+		return appointments;
+	}
+
+	public void setAppointments(Appointments appointments) {
+		this.appointments = appointments;
+	}
+	
+	
+
+	public Appointment getAppointment() {
+		return appointment;
+	}
+
+	public void setAppointment(Appointment appointment) {
+		this.appointment = appointment;
 	}
 
 	@Override
